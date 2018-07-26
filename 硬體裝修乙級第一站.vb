@@ -3,8 +3,8 @@ Private Declare Function OpenUsbDevice Lib "USBIO.dll" (ByVal a As Integer, ByVa
 Private Declare Sub OutDataCtrl Lib "USBIO.dll" (ByVal a As Byte, ByVal b As Byte)
 
 '公用變數宣告
-Dim a, c As Integer    //a為按鈕編號(Green:1,Red:2,Exit:3)，c為記錄燈號狀態
-Dim r(20) As Byte, g(20) As Byte    //r(20)：存放紅燈的燈號狀態 g(20)：存放綠燈的燈號狀態
+Dim a, c As Integer    'a為按鈕編號(Green:1,Red:2,Exit:3)，c為記錄燈號狀態
+Dim r(20) As Byte, g(20) As Byte    'r(20)：存放紅燈的燈號狀態 g(20)：存放綠燈的燈號狀態
 
 '載入程式：依題號預設燈號狀態，採10進位計算(以下範例為試題一)
 Private Sub Form_Load()
@@ -14,7 +14,7 @@ End Sub
 
 '程式結束時清除電路板燈號
 Private Sub Form_Unload(Cancel As Integer)
-    OutDataCtrl 0, &H0: OutDataCtrl 0, &H30    //&H0：控制板子上的綠燈，&H30：控制板子上的紅燈，0：代表熄燈
+    OutDataCtrl 0, &H0: OutDataCtrl 0, &H30    '&H0：控制板子上的綠燈，&H30：控制板子上的紅燈，0：代表熄燈
 End Sub
 
 '紀錄按鈕編號，並把燈號狀態設為0
@@ -33,7 +33,7 @@ Private Sub Timer1_Timer()
 
     '取得連線結果
     Dim conn As Boolean
-    conn = OpenUsbDevice(&H1234, &H6789)     //連結USB到板子，成功 conn=1，失敗 conn=0
+    conn = OpenUsbDevice(&H1234, &H6789)     '連結USB到板子，成功 conn=1，失敗 conn=0
 
     '設定畫面連結燈號顏色，若連結成功則程式亮暗色燈，前八顆為暗紅色，後八顆為暗綠色，連結失敗則為無色(不亮)
     For i = 0 To 15
@@ -47,8 +47,8 @@ Private Sub Timer1_Timer()
 
     '依按鈕控制畫面亮燈控制
     For i = 0 To 7
-        If a = 1 And (g(c) And 2 ^ i) Then Shape1(i + 8).FillColor = RGB(0, 255, 0)     //依燈號狀態亮綠(8~15)燈
-        If a = 2 And (r(c) And 2 ^ i) Then Shape1(i).FillColor = RGB(255, 0, 0)     //依燈號狀態亮紅(0~7)燈
+        If a = 1 And (g(c) And 2 ^ i) Then Shape1(i + 8).FillColor = RGB(0, 255, 0)     '依燈號狀態亮綠(8~15)燈
+        If a = 2 And (r(c) And 2 ^ i) Then Shape1(i).FillColor = RGB(255, 0, 0)     '依燈號狀態亮紅(0~7)燈
     Next
 
     '往下一個狀態，最多15種狀態(試題9,10)，
